@@ -1,0 +1,7 @@
+<a href='/welcome'>Home</a><a href='/logout'>Logout</a>
+<h1>Add Your New Toy</h1>
+<form action='/create' method='post'>
+    {% csrf_token %}
+    Your Toy Name<input type=text name='name'>
+    <input type='submit' value='Add'>
+</form>
