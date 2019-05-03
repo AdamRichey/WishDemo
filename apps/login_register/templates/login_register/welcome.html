@@ -5,16 +5,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" type="text/css" href="{% static 'login_register/welcome.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'login_register/welcome.css'%}">
         <title>Main</title>
     </head>
     <body>
-        <a href=/logout>Logout</a>
-
-        <h1>Hello! {{users.name}}</h1>
-
+            <a href=/logout>Logout</a>
+            <h1>Wishlist Builder</h1>
+            <h2>Hello! {{users.name}}</h2>
         <h3>Your Wishlist</h3>
-        <table style="width:100%">
+        <table id="yours">
             <tr>
             <th>Item</th>
             <th>Added by</th> 
@@ -33,9 +32,8 @@
             </form>
                 {% endfor %}  
         </table>
-
-        <h3>Other People Wishlists</h3>
-        <table style="width:100%">
+        <h3>Toy Catalog</h3>
+        <table>
             <tr>
             <th>Item</th>
             <th>Added by</th> 
@@ -54,6 +52,7 @@
             </form>
                 {% endfor %}  
         </table>
+        <br>
         <a href='/add'>Add New Toy</a>
     </body>
 </html>

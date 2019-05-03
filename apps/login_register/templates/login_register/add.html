@@ -1,7 +1,25 @@
-<a href='/welcome'>Home</a><a href='/logout'>Logout</a>
-<h1>Add Your New Toy</h1>
-<form action='/create' method='post'>
-    {% csrf_token %}
-    Your Toy Name<input type=text name='name'>
-    <input type='submit' value='Add'>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+            {% load static %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <link rel="stylesheet" type="text/css" href="{% static 'login_register/add.css' %}">
+            <title>Add</title>
+        </head>
+    <body>
+        <a href='/welcome'>Home</a>
+        <a href='/logout'>Logout</a>
+        <div id="add">
+            <h1>Add Your New Toy Name</h1>
+            <form action='/create' method='post'>
+                {% csrf_token %}
+                <input type=text name='name' placeholder="Your Toy">
+                <br>
+                <br>
+                <input type='submit' value='Add' id="button">
+            </form>
+        </div>
+    </body>
+</html>

@@ -6,32 +6,60 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" type="text/css" href="{% static 'login_register/index.css' %}">
-        <title>Main</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>Index</title>
     </head>
     <body>
-        <div id=register>
-            <h3>Register</h3>
-            <form action='register' method='post'>
-                {% csrf_token %}
-                Name: <input type='text' name= 'name'>
-                Username: <input type='text' name='username'>
-                Password: <input type='password' name='password'>
-                <p>*Password should be at least 8 characters</p>
-                Confirm PW: <input type='password' name='cfpw'>
-                Date Hired:<input type=date>
-                <input type='submit' value='Register'>
-            </form>
-        </div>    
-        <div id=login>
-            <form action='login' method='post'>
-                <h3>Login</h3>
-                {% csrf_token %}
-                Username: <input type=text name='lname'>
-                Password: <input type=password name='lpassword'>
-                <input type='submit' value='Login'>
-            </form>
-        </div>
-            {% for message in messages %}
-            <h3>***{{message}}***</h3>
-            {%endfor%}
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-4">
+                        <h3>Login</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                    <form action='login' method='post'>
+                                            {% csrf_token %}
+                                            <input type=text name='lname' placeholder="Username">
+                                            <br>
+                                            <input type=password name='lpassword' placeholder='Password'>
+                                            <br>
+                                            <input type='submit' value='Login' class='button' >
+                                        </form>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                    <div class="row justify-content-center align-items-center">                        
+                        <div class="col-4">
+                            <h3>Register</h3>
+                            <div class="card">
+                                <div class="card-body">
+                                        <form action='register' method='post'>
+                                            {% csrf_token %}
+                                            <input type='text' name= 'name' placeholder='Name'>
+                                            <br>
+                                            <input type='text' name='username' placeholder='Username'>
+                                            <br>
+                                            <input type='password' name='password' placeholder='Password 8 Characters'>
+                                            <br>
+                                            <input type='password' name='cfpw' placeholder='Confirm Password'>
+                                            <br>
+                                            <input type='submit' value='Register'class='button'>
+                                        </form>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for message in messages %}
+                <h5>{{message}}</h5>
+                {%endfor%}             
+
     </body>
+</html>

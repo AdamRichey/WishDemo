@@ -1,4 +1,42 @@
-<a href='/welcome'>Home</a><a href='/logout'>Logout</a>
-<h1>Information About This Toy</h1>
-<p>Name:  {{toy.name}}</p>
-<p>Created By: {{toy.added_by}}</p>
+<!DOCTYPE html>
+<html>
+    <head>
+            {% load static %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <link rel="stylesheet" type="text/css" href="{% static 'login_register/info.css' %}">
+            <title>Info</title>
+    </head>
+    <body>
+        <a href='/welcome'>Home</a>
+        <a href='/logout'>Logout</a>
+        <h1>Information About This Toy</h1>
+        <div id="info">
+            <h2>Toy Name: {{toy.name}}</h2>
+            <h2>Created By: {{toy.added_by}}</h2> 
+        </div> 
+        {% if toy.added_by == user %}
+        <div id="edit">
+            <h3>Edit Your Toy Here:</h3>
+            <form action='/update/{{toy.id}}' method='post'>
+                {% csrf_token %}
+                <input type=text name='name' placeholder='New Toy Name'>
+                <br>
+                <br>
+                <input type='submit' value='Update' input class='button'>
+            </form>
+            <br>
+            <form action='/deletetotal/{{toy.id}}' method='post'>
+                {% csrf_token %}
+                <input type='submit' value='Delete' class='button' onclick="deleteFunction()">
+                <script>
+                    function deleteFunction() {
+                         alert("Are you Sure? This Will Permenately Delete Your Item");
+                    }
+                </script>
+            </form>
+        </div>
+        {% endif %}
+    </body>
+</html>

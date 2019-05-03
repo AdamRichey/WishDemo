@@ -7,21 +7,10 @@ from django.contrib import messages
 
 from .models import *
 
-def index(request):
+def index(request): #Index Page For Login
     return render(request, 'login_register/index.html')
 
-def welcome(request):
-    if request.session['user']==' ':
-        return redirect('/')
-    else:
-        context={
-            'users':User.objects.get(username=request.session['user']),
-            'toys':Toy.objects.all(),
-            'wishlists':User.objects.get(username=request.session['user']).toy.all()
-        }
-        return render(request, 'login_register/welcome.html', context)
-
-def register(request):
+def register(request): #Validations For Registration Credentials
     errors = User.objects.rvalidator(request.POST)
     if len(errors):
         for error in errors:
@@ -33,10 +22,9 @@ def register(request):
         password=request.POST['password']
         User.objects.create(name=name, username=username, password=password)
         request.session['user']=username
-        return redirect('/welcome')
-        
+        return redirect('/welcome')        
 
-def login(request):
+def login(request): #Validations For Login Credentials
     lerrors = User.objects.lvalidator(request.POST)
     if len(lerrors):
         for lerror in lerrors:
@@ -46,37 +34,63 @@ def login(request):
         name=request.POST['lname']
         request.session['user']=name
         return redirect('/welcome')
-def logout(request):
+        
+def logout(request): #Logout/Clearing Session
     request.session['user']=' '
     return redirect('/')
 
-def add(request):
+def welcome(request): #Welcome Page Loadout
+    if request.session['user']==' ':
+        return redirect('/')
+    else:
+        context={
+            'users':User.objects.get(username=request.session['user']),
+            'toys':Toy.objects.all().order_by('name'),
+            'wishlists':User.objects.get(username=request.session['user']).toy.all()
+        }
+        return render(request, 'login_register/welcome.html', context)
+        
+def add(request): #Add Page Render
     return render(request, 'login_register/add.html')
 
-def create(request):
-    user=User.objects.get(username=request.session['user'])
-    Toy.objects.create(name=request.POST['name'], added_by=user.name)
-    return redirect('/welcome')
 
-def addnow(request, id):
+def addnow(request, id): #Adding Toy To Wishlist
     a1=Toy.objects.get(id=id)
-    a2=user=User.objects.get(username=request.session['user'])
+    a2=User.objects.get(username=request.session['user'])
     a2.toy.add(a1)
     a2.save()
     return redirect('/welcome')
 
-def delete(request, id):
+def delete(request, id): #Delete Toy From Wishlist
     a1=Toy.objects.get(id=id)
-    a2=user=User.objects.get(username=request.session['user'])
+    a2=User.objects.get(username=request.session['user'])
     a2.toy.remove(a1)
     a2.save()
     return redirect('/welcome')
 
-def info(request, id):
+def create(request): #Create New Toy
+    user=User.objects.get(username=request.session['user'])
+    Toy.objects.create(name=request.POST['name'], added_by=user.name)
+    return redirect('/welcome')
+
+def info(request, id): #Render Toy
     context={
-        'toy':Toy.objects.get(id=id)
+        'user':User.objects.get(username=request.session['user']).name,
+        'toy':Toy.objects.get(id=id),
     }
     return render(request, 'login_register/info.html', context)
+
+def update(request, id): #Update Toy Name
+    a1=Toy.objects.get(id=id)
+    a1.name=request.POST['name']
+    a1.save()
+    return redirect('/welcome')
+
+def deletetotal(request, id): #Delete Toy
+    a1=Toy.objects.get(id=id)
+    Toy.delete(a1)
+    return redirect('/welcome')
+
+
     
 
-# Create your views here.

@@ -9,7 +9,7 @@ class UserManager(models.Manager):
         if len(data['name'])<2:
             errors.append('Add your name')
         if  data['name'].isdigit == True:
-            errors.append('Invalid User')
+            errors.append('Invalid Name')
         if User.objects.filter(username=data['username']).count()>0:
             errors.append('User Taken')
         if len(data['password'])<8:
@@ -37,7 +37,8 @@ class UserManager(models.Manager):
 class Toy(models.Model):
     name = models.CharField(max_length=100)
     added_by=models.CharField(max_length=100)
-    date_Added = models.DateTimeField(auto_now_add = True)            
+    date_Added = models.DateTimeField(auto_now_add = True)
+    objects = UserManager()          
 
 class User(models.Model):
     name = models.CharField(max_length=100)
